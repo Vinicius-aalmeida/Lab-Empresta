@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+
+<body>
+    <H1>PRODUTOS DO BACKEND</H1>
+    <div id="filtros">
+        <p>Filtros de pesquisa</p>
+        <input type="text" id="nome" placeholder="Nome" value="" />
+        <select id="status">
+            <option value=""> - Status - </option>
+            <option value="emprestado">Emprestado</option>
+            <option value="disponivel">Disponível</option>
+            <option value="manutencao">Em Manutenção</option>
+        </select>
+        <select id="tipo">
+            <option value=""> - Tipo - </option>
+            <option value="notebook">Notebook</option>
+            <option value="projetor">Projetor</option>
+            <option value="mause">Mause</option>
+            <option value="tablet">Tablet</option>
+            <option value="camera">Câmera</option>
+            <option value="audio">Áudio</option>
+            <option value="minicomputador">Minicomputador</option>
+            <option value="mouse">Mouse</option>
+        </select>
+        <button id="filtrar" onclick="getProducts()">Filtrar</button>
+    </div>
+    <div id="produtos">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody id="data"></tbody>
+        </table>
+    </div>
+    <script src='main.js'></script>
+</body>
+
+</html>
