@@ -10,6 +10,7 @@ const produtos = [];
 
 /* Adicionano objetos no vetor produtos */
 const p1 = {
+
     id: 1,
     nome: 'Alienware',
     tipo: 'notebook',
@@ -101,8 +102,74 @@ app.get('/produtos', (req, res) => {
 
     res.json(resultado);
 });
+// GET /produtos/:id — retorna um produto pelo id
+app.get('/produtos/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const produto = produtos.find(p => p.id === id);
+
+    if (!produto) return res.status(404).json({ erro: 'Produto não encontrado' });
+
+    res.json(produto);
+});
+
+// POST /produtos — cria um novo produto
+app.post('/produtos', (req, res) => {
+    const { nome, tipo, status, descricao } = req.body;
+
+    // Validações
+    if (!nome || !tipo) {
+        return res.status(400).json({ erro: 'Nome e tipo são obrigatórios' });
+    }
+
+    const statusValidos = ['disponivel', 'emprestado', 'manutencao'];
+    if (status && !statusValidos.includes(status)) {
+        return res.status(400).json({ erro: 'Status inválido. Use: disponivel, emprestado ou manutencao' });
+    }
+
+    // Gera o id automaticamente
+    const id = Math.max(0, ...produtos.map(p => p.id)) + 1;
+
+    const novoProduto = {
+        id,
+        nome,
+        tipo,
+        status: status || 'disponivel',
+        descricao: descricao || ''
+    };
+
+    produtos.push(novoProduto);
+    res.status(201).json(novoProduto);
+});
+
+// PUT /produtos/:id — atualiza um produto existente
+app.put('/produtos/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const index = produtos.findIndex(p => p.id === id);
+
+    if (index === -1) return res.status(404).json({ erro: 'Produto não encontrado' });
+
+    const statusValidos = ['disponivel', 'emprestado', 'manutencao'];
+    if (req.body.status && !statusValidos.includes(req.body.status)) {
+        return res.status(400).json({ erro: 'Status inválido. Use: disponivel, emprestado ou manutencao' });
+    }
+
+    produtos[index] = { ...produtos[index], ...req.body, id };
+    res.json(produtos[index]);
+});
+
+// DELETE /produtos/:id — remove um produto
+app.delete('/produtos/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const index = produtos.findIndex(p => p.id === id);
+
+    if (index === -1) return res.status(404).json({ erro: 'Produto não encontrado' });
+
+    produtos.splice(index, 1);
+    res.status(204).send();
+});
 
 const PORT = 3004;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(` Servidor rodando em http://localhost:${PORT}`);
+    console.log(` ${produtos.length} produtos carregados`);
 });
