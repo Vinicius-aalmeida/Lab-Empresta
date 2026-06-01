@@ -47,3 +47,29 @@ button:hover{
     cursor: pointer;
     background-color: #555;
 }
+#mensagem {
+    width: 90%;
+    margin: 10px auto;
+    padding: 12px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#formulario {
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+}
+
+#formulario p {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#data button {
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 12px;
+}
